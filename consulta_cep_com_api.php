@@ -32,16 +32,16 @@ if(isset($_POST['submit']) and strlen($cep) == 8){
     //verifica o certificado SSL da API
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 
-    //executa o curl e a transforma em um JSON em formato de array
+    //executa o curl e a transforma o JSON em um array associativo
     $consult = json_decode(curl_exec($ch), true);
 
-    //se o CEP tem o formato válido, mas não é encontrado na DB da API é retornado o valor "true"
+    //se o CEP tem o formato válido, mas não é encontrado na DB da API, ela retorna o valor "true"
     //a função in_array verifica se existe o valor true no formato boolean
     if(in_array(true, $consult, true)){ 
         echo "CEP não encontrado no banco de dados.";
     } else {
 
-        //retira alguns valores do array que não úteis na minha opinião
+        //retira alguns valores do array que não são úteis na minha opinião
         $aftermath = array_diff_key($consult, ['gia' => '', 'ddd' =>'', 'siafi' => '']);
 
         //lista o array
